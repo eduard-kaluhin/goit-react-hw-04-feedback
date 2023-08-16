@@ -1,40 +1,49 @@
-import React, { Component } from 'react';
+import  { useState } from 'react';
 import Section from './Section';
 import FeedbackOptions from './FeedbackOptions';
 import Statistics from './Statistics';
 import Notification from './Notification';
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+
+export const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const options = { good, neutral, bad };
+
+  const onClick = type => {
+    switch (type) {
+      case 'good':
+        setGood(prevState => prevState + 1);
+        break;
+      case 'neutral':
+        setNeutral(prevState => prevState + 1);
+        break;
+      case 'bad':
+        setBad(prevState => prevState + 1);
+        break;
+      default:
+        return;
+    }
   };
-  componentDidMount() {
-    document.title = 'HW-2 Feedback';
-  }
+
   // Метод для підрахунку загальної суми відгуків
-  getTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
+  const getTotalFeedback = () => {
     return good + neutral + bad;
   };
   // Метод для підрахунку відсотку позитивних відгуків
-  getPositivePercentage = () => {
-    const { good, } = this.state;
-    const totalFeedback = this.getTotalFeedback();
+  const getPositivePercentage = () => {
+    const totalFeedback = getTotalFeedback();
     return totalFeedback === 0 ? 0 : Math.round((good / totalFeedback) * 100);
   };
-  onClick = option => {
-    this.setState(prevState => ({
-      [option]: prevState[option] + 1,
-    }));
-  };
-  render() {
-    const { good, neutral, bad } = this.state;
-    const totalFeedback = this.getTotalFeedback();
-  const positivePercentage = this.getPositivePercentage();        
+ 
+ 
+    const totalFeedback = getTotalFeedback();
+  const positivePercentage = getPositivePercentage(); 
+
     return (
       <Section title="Please leave feedback">
-        <FeedbackOptions onClick={this.onClick} feedbackOptions={this.state} />
+        <FeedbackOptions feedbackOptions={options} onClick={onClick} />
         {totalFeedback === 0 ? (
           <Notification message="No feedback given" />
         ) : (
@@ -44,12 +53,11 @@ export class App extends Component {
         bad={bad}
         totalFeedback={totalFeedback}
         positivePercentage={positivePercentage}
-        feedbackOptions={this.state} // Передаем feedbackOptions в компонент Statistics
-/>
+        feedbackOptions={this.state} 
+          />
         )}
       </Section>
     );
-  }
-}
+  };
 
 export default App;
