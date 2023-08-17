@@ -25,7 +25,7 @@ const FeedbackOptions = ({ onClick, feedbackOptions }) => {
         {Object.keys(feedbackOptions).map((key, ind) => {
           return (
             <Button
-              className="optionButton"
+              
               key={ind}
               onClick={() => onClick(key)}
               color={key}
