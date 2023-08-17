@@ -53,7 +53,7 @@ export const App = () => {
         bad={bad}
         totalFeedback={totalFeedback}
         positivePercentage={positivePercentage}
-        feedbackOptions={options } 
+        feedbackOptions={options} 
           />
         )}
       </Section>
